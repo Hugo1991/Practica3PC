@@ -53,15 +53,15 @@ public class Imagen{
 	}
 
 	/**
-	 * @param matrizImagen the matrizImagen to set
+	 * @param matrizImagen the matrizIzmagen to set
 	 */
 	public void setMatrizImagen(int[][] matrizImagen){
 		this.matrizImagen = matrizImagen;
 	}
 
 	public void mostrarMatriz(){
-		for(int i = 0;i < 18071;i++){
-			for(int j = 0;j < 17;j++){
+		for(int i = 0;i < alto;i++){
+			for(int j = 0;j < ancho;j++){
 				System.out.print(getMatrizImagen()[i][j] + " ");
 			}
 			System.out.println();

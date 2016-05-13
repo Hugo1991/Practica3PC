@@ -24,12 +24,16 @@ public class Filtro{
 		}
 	}
 
-	public static void aplicarFiltroImagen(int[][] imagen,int x,int y,int[][] imagenCopia){
+	public static int aplicarFiltroPixel(int[][] imagen,int x,int y){
 		int suma = 0;
+		int posFiltroX=0;
 		for(int fila = x - 1;fila <= x + 1;fila++){
+			int posFiltroY=0;
 			for(int col = y - 1;col <= y + 1;col++){
-				suma += (imagen[fila][col] * matriz[fila][col]);
+				suma += (imagen[fila][col] * matriz[posFiltroX][posFiltroY]);
+				posFiltroY++;
 			}
+			posFiltroX++;
 		}
 		if(suma < 0){
 			suma *= -1;
@@ -37,8 +41,7 @@ public class Filtro{
 		if(suma > 255){
 			suma /= getValorAbsoluto();
 		}
-		System.out.println(suma);
-		imagenCopia[x][y] = suma;
+		return suma;
 	}
 
 	private static int getValorAbsoluto(){

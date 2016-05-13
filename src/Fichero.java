@@ -1,43 +1,36 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
-public class Fichero{
-	public static void leerFichero(String rutaImagen,Imagen imagenSalida){
-		FileReader f;
-		int[][] matrizImagen = null;
-		int i = 0;
-		try{
-			f = new FileReader(rutaImagen);
-			BufferedReader b = new BufferedReader(f);
-			String linea = b.readLine();
+public class Fichero {
+		public static void leerFichero(String rutaImagen, Imagen imagenSalida) {
+		try {
+			Scanner scanner = new Scanner(new File(rutaImagen));
+			String linea = scanner.nextLine();
 			imagenSalida.setTipo(linea);
-			linea = b.readLine();
-			while(linea.startsWith("#")){
-				linea = b.readLine();
+
+			while (!scanner.hasNextInt()) {
+				scanner.nextLine();
 			}
-			imagenSalida.setAncho(Integer.parseInt(linea.split("\\s+")[0]));
-			imagenSalida.setAlto(Integer.parseInt(linea.split("\\s+")[1]));
-			linea = b.readLine();
-			while((linea = b.readLine()) != null){
-				String[] numeros = (linea.trim().split("\\s+"));
-				if(matrizImagen == null){
-					matrizImagen = new int[18075][numeros.length];
+
+			int width = scanner.nextInt();
+			int height = scanner.nextInt();
+			imagenSalida.setAncho(width);
+			imagenSalida.setAlto(height);
+			int max = scanner.nextInt();
+			int[][] image = new int[height][width];
+			for (int i = 0; i < height; ++i) {
+				for (int j = 0; j < width; ++j) {
+					int value = scanner.nextInt();
+					value = (int) Math.round(((double) value) / max * 255);
+					image[i][j] = value;
 				}
-				for(int j = 0;j < numeros.length;j++){
-					matrizImagen[i][j] = Integer.parseInt(numeros[j].trim());
-				}
-				i++;
 			}
-			imagenSalida.setMatrizImagen(matrizImagen);
-		}catch(FileNotFoundException e){
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch(NullPointerException npe){
-			System.out.println("error leyendo la fila");
-			npe.printStackTrace();
-		}catch(IOException e){
+			imagenSalida.setMatrizImagen(image);
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
