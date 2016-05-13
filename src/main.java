@@ -4,25 +4,26 @@ public class main {
 	public static void main(String[] args) {
 		Imagen imagenOriginal = new Imagen();
 		Imagen imagenCopia=new Imagen();
-		int[][] matrizTransformar = { { 221, 198, 149 }, { 205, 147, 173 }, { 149, 170, 222 } };
-		
-		// Filtro.mostrarFiltro();
 		Filtro f = menu();
 		Fichero.leerFichero("imagenes/totem.ascii.pgm", imagenOriginal);
-		//imagenOriginal.mostrarMatriz();
-		int[][] matrizCopia = new int[imagenOriginal.getAlto()][imagenOriginal.getAncho()];
+		
+		int[][] matrizCopia = new int[480][640];
 		// se aplica de manerra concurrente, el filtro sobre la matriz que hemos
 		// leido
-		for (int i = 0; i < imagenOriginal.getAlto(); i++)
-			for (int j = 0; j < imagenOriginal.getAncho(); j++){
-				if((i>0&&i<imagenOriginal.getAlto()-1 )&&(j>0&&j<imagenOriginal.getAncho()-1))
+		for (int i = 1; i < imagenOriginal.getAlto()-1; i++){
+			for (int j = 1; j < imagenOriginal.getAncho()-1; j++){
+				//if((i>0&&i<imagenOriginal.getAlto()-1 )&&(j>0&&j<imagenOriginal.getAncho()-1))
 					matrizCopia[i][j]=Filtro.aplicarFiltroPixel(imagenOriginal.getMatrizImagen(), i, j);
-				else
-					matrizCopia[i][j]=0;
+				//else{}
+					//matrizCopia[i][j]=0;
+					//System.out.print(matrizCopia[i][j]+" ");
+					imagenCopia.asignaPixelMatriz(matrizCopia, i, j, matrizCopia[i][j]);
 			}
-		System.out.println(matrizCopia[1][2]);
-		imagenCopia.setMatrizImagen(matrizCopia);
-
+			//System.out.println();
+		}
+		//System.out.println(matrizCopia[1][2]);
+		//imagenCopia.setMatrizImagen(matrizCopia);
+		//imagenOriginal.mostrarMatriz();
 		imagenCopia.mostrarMatriz();
 		// se solicita al usuario el nombre del fichero de salida y se guarda la
 		// imagen filtrado en ficho fichero con el

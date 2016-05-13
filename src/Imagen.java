@@ -58,6 +58,9 @@ public class Imagen{
 	public void setMatrizImagen(int[][] matrizImagen){
 		this.matrizImagen = matrizImagen;
 	}
+	public void asignaPixelMatriz(int[][]matriz,int i,int j,int valor){
+		matriz[i][j]=valor;
+	}
 
 	public void mostrarMatriz(){
 		for(int i = 0;i < alto;i++){
