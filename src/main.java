@@ -4,6 +4,7 @@ public class main {
 	public static void main(String[] args) {
 		Imagen imagenOriginal = new Imagen();
 		Filtro f = menu();
+		Scanner sc = new Scanner(System.in);
 		Fichero.leerFichero("imagenes/totem.ascii.pgm", imagenOriginal);
 		
 		int[][] matrizCopia = new int[480][640];
