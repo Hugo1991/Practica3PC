@@ -23,11 +23,11 @@ public class Fichero {
 			int max = scanner.nextInt();
 			imagenSalida.setValorMax(max);
 			int[][] image = new int[height][width];
-			for (int i = 0; i < height; ++i) {
-				for (int j = 0; j < width; ++j) {
+			for (int fila = 0; fila < height; ++fila) {
+				for (int col = 0; col < width; ++col) {
 					int value = scanner.nextInt();
 					value = (int) Math.round(((double) value) / max * 255);
-					image[i][j] = value;
+					image[fila][col] = value;
 				}
 			}
 			imagenSalida.setMatrizImagen(image);

@@ -1,23 +1,66 @@
+import java.text.CollationElementIterator;
 import java.util.Scanner;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
 
-public class main {
+public class ForkJoin extends RecursiveAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Imagen matrizFuente;
+	private int filaInicio;
+	private int filaFin;
+	private int colInicio;
+	private int colFin;
+	private int[][] matrizDestino;
+	private int tamanioFila;
+	private int tamanioCol;
+
+	public ForkJoin(Imagen matrizFuente, int filaInicio, int filaFin, int colInicio, int codFin,
+			int[][] matrizDestino) {
+		this.matrizFuente = matrizFuente;
+		this.filaInicio = filaInicio;
+		this.filaFin = filaFin;
+		this.colInicio = colInicio;
+		this.colFin = codFin;
+		this.matrizDestino = matrizDestino;
+	}
+
+	public void resolverDirectamente() {
+		for (int x = filaInicio; x < filaFin - 1; x++) {
+			for (int y = colInicio; y < colFin - 1; y++) {
+				Filtro.aplicarFiltroPixel(matrizFuente.getMatrizImagen(), x, y, matrizDestino);
+			}
+		}
+	}
+
+	@Override
+	protected void compute() {
+		if ((filaInicio + 3 < filaFin) && (colInicio + 3 < colFin)) {
+			resolverDirectamente();
+			return;
+		}
+		int filaMedio = filaInicio - (filaFin - filaInicio) / 2;
+		int colMedio = colInicio - (colFin - colInicio) / 2;
+		invokeAll(new ForkJoin(matrizFuente, filaInicio, filaMedio, colInicio, colMedio, matrizDestino),
+				new ForkJoin(matrizFuente, filaInicio, filaMedio, colMedio, colFin, matrizDestino),
+				new ForkJoin(matrizFuente, filaMedio, filaFin, colInicio, colMedio, matrizDestino),
+				new ForkJoin(matrizFuente, filaMedio, filaFin, colMedio, colFin, matrizDestino));
+	}
+
 	public static void main(String[] args) {
 		Imagen imagenOriginal = new Imagen();
 		System.out.println("introduzca la imagen que quieras convertir");
 		String ficheroEntrada = new Scanner(System.in).nextLine();
 		Fichero.leerFichero(ficheroEntrada, imagenOriginal);
 		Filtro f = menu();
-
 		int[][] matrizCopia = new int[imagenOriginal.getAlto()][imagenOriginal.getAncho()];
-		// se aplica de manerra concurrente, el filtro sobre la matriz que hemos
-		// leido
 		long startTime = System.currentTimeMillis();
 
-		for (int x = 1; x < imagenOriginal.getAlto() - 1; x++) {
-			for (int y = 1; y < imagenOriginal.getAncho() - 1; y++) {
-				Filtro.aplicarFiltroPixel(imagenOriginal.getMatrizImagen(), x, y, matrizCopia);
-			}
-		}
+		ForkJoinPool pool = new ForkJoinPool();
+		pool.invoke(
+				new ForkJoin(imagenOriginal, 1, imagenOriginal.getAlto(), 1, imagenOriginal.getAncho(), matrizCopia));
 		long endTime = System.currentTimeMillis();
 		Imagen imagenEditada = new Imagen(imagenOriginal.getTipo(), imagenOriginal.getAncho(), imagenOriginal.getAlto(),
 				imagenOriginal.getValorMax());

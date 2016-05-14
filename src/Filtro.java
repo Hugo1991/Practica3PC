@@ -24,7 +24,7 @@ public class Filtro{
 		}
 	}
 
-	public static int aplicarFiltroPixel(int[][] imagen,int x,int y){
+	public static void aplicarFiltroPixel(int[][] imagen,int x,int y, int [][]imagenDestino){
 		int suma = 0;
 		int posFiltroX=0;
 		for(int fila = x - 1;fila <= x + 1;fila++){
@@ -35,13 +35,11 @@ public class Filtro{
 			}
 			posFiltroX++;
 		}
-		if(suma < 0){
-			suma *= -1;
-		}
+		
 		if(suma > 255){
-			suma /= getValorAbsoluto();
+			suma /= Math.abs(getValorAbsoluto());
 		}
-		return suma;
+		imagenDestino[x][y]=suma;
 	}
 
 	private static int getValorAbsoluto(){
@@ -56,6 +54,6 @@ public class Filtro{
 				}
 			}
 		}
-		return Math.max(sumaPos,sumaNeg);
+		return Math.max(sumaPos,Math.round(sumaNeg));
 	}
 }
