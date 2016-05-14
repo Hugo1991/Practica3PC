@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class main {
 	public static void main(String[] args) {
 		Imagen imagenOriginal = new Imagen();
-		Imagen imagenCopia=new Imagen();
 		Filtro f = menu();
 		Fichero.leerFichero("imagenes/totem.ascii.pgm", imagenOriginal);
 		
@@ -12,22 +11,18 @@ public class main {
 		// leido
 		for (int i = 1; i < imagenOriginal.getAlto()-1; i++){
 			for (int j = 1; j < imagenOriginal.getAncho()-1; j++){
-				//if((i>0&&i<imagenOriginal.getAlto()-1 )&&(j>0&&j<imagenOriginal.getAncho()-1))
 					matrizCopia[i][j]=Filtro.aplicarFiltroPixel(imagenOriginal.getMatrizImagen(), i, j);
-				//else{}
-					//matrizCopia[i][j]=0;
-					//System.out.print(matrizCopia[i][j]+" ");
-					imagenCopia.asignaPixelMatriz(matrizCopia, i, j, matrizCopia[i][j]);
 			}
-			//System.out.println();
 		}
-		//System.out.println(matrizCopia[1][2]);
-		//imagenCopia.setMatrizImagen(matrizCopia);
-		//imagenOriginal.mostrarMatriz();
-		imagenCopia.mostrarMatriz();
+		Imagen imagenEditada=new Imagen(imagenOriginal.getTipo(),imagenOriginal.getAncho(),imagenOriginal.getAlto(),imagenOriginal.getValorMax());
+
+		imagenEditada.setMatrizImagen(matrizCopia);
+		imagenEditada.mostrarMatriz();
+		System.out.println(imagenEditada.getTipo());
 		// se solicita al usuario el nombre del fichero de salida y se guarda la
 		// imagen filtrado en ficho fichero con el
 		// formato PGM antes descrito
+		Fichero.escribirFichero("foto.ascii.pgm", imagenEditada);
 	}
 
 	public static Filtro menu() {
