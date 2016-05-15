@@ -22,8 +22,8 @@ public class ForkJoin extends RecursiveAction {
 	}
 
 	public void resolverDirectamente() {
-		for (int x = filaInicio; x < filaFin - 1; x++)
-			for (int y = colInicio; y < colFin - 1; y++)
+		for (int x = filaInicio; x < filaFin; x++)
+			for (int y = colInicio; y < colFin; y++)
 				Filtro.aplicarFiltroPixel(matrizFuente.getMatrizImagen(), x, y, matrizDestino);
 	}
 
@@ -33,15 +33,15 @@ public class ForkJoin extends RecursiveAction {
 			resolverDirectamente();
 			return;
 		}
-		
+
 		int filaMedio = filaInicio;
 		int colMedio = colInicio;
 		filaMedio = (filaFin + filaInicio) / 2;
 		colMedio = (colFin + colInicio) / 2;
-		ForkJoin f1 = new ForkJoin(matrizFuente, filaInicio, filaMedio+1, colInicio, colMedio+1, matrizDestino);
-		ForkJoin f2 = new ForkJoin(matrizFuente, filaInicio, filaMedio+1, colMedio-1, colFin, matrizDestino);
-		ForkJoin f3 = new ForkJoin(matrizFuente, filaMedio-1, filaFin, colInicio, colMedio+1, matrizDestino);
-		ForkJoin f4 = new ForkJoin(matrizFuente, filaMedio-1, filaFin, colMedio-1, colFin, matrizDestino);
+		ForkJoin f1 = new ForkJoin(matrizFuente, filaInicio, filaMedio, colInicio, colMedio, matrizDestino);
+		ForkJoin f2 = new ForkJoin(matrizFuente, filaInicio, filaMedio, colMedio, colFin, matrizDestino);
+		ForkJoin f3 = new ForkJoin(matrizFuente, filaMedio, filaFin, colInicio, colMedio, matrizDestino);
+		ForkJoin f4 = new ForkJoin(matrizFuente, filaMedio, filaFin, colMedio, colFin, matrizDestino);
 		f1.fork();
 		f2.fork();
 		f3.fork();
@@ -63,8 +63,8 @@ public class ForkJoin extends RecursiveAction {
 		int[][] matrizCopia = new int[imagenOriginal.getAlto()][imagenOriginal.getAncho()];
 		long startTime = System.currentTimeMillis();
 		ForkJoinPool pool = new ForkJoinPool();
-		pool.invoke(
-				new ForkJoin(imagenOriginal, 1, imagenOriginal.getAlto(), 1, imagenOriginal.getAncho(), matrizCopia));
+		pool.invoke(new ForkJoin(imagenOriginal, 1, imagenOriginal.getAlto() - 1, 1, imagenOriginal.getAncho() - 1,
+				matrizCopia));
 		long endTime = System.currentTimeMillis();
 		Imagen imagenEditada = new Imagen(imagenOriginal.getTipo(), imagenOriginal.getAncho(), imagenOriginal.getAlto(),
 				imagenOriginal.getValorMax());
