@@ -3,7 +3,7 @@ public class Executor implements Runnable{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		//codigo de tarea
 		
 	}
 

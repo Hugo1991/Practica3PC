@@ -3,9 +3,6 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
 public class ForkJoin extends RecursiveAction {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Imagen matrizFuente;
 	private int filaInicio;
@@ -32,20 +29,18 @@ public class ForkJoin extends RecursiveAction {
 
 	@Override
 	protected void compute() {
-		if ((filaFin - filaInicio >= 3) && (colFin - colInicio >= 3)) {
+		if ((filaFin - filaInicio <= 3) && (colFin - colInicio <= 3)) {
 			resolverDirectamente();
 			return;
 		}
 		int filaMedio = filaInicio;
 		int colMedio = colInicio;
-		if ((filaFin - filaInicio > 3))
-			filaMedio = (filaFin + filaInicio) / 2;
-		if ((colFin - colInicio > 3))
-			colMedio = (colFin + colInicio) / 2;
-		ForkJoin f1 = new ForkJoin(matrizFuente, filaInicio, filaMedio, colInicio, colMedio, matrizDestino);
-		ForkJoin f2 = new ForkJoin(matrizFuente, filaInicio, filaMedio, colMedio, colFin, matrizDestino);
-		ForkJoin f3 = new ForkJoin(matrizFuente, filaMedio + 1, filaFin, colInicio, colMedio, matrizDestino);
-		ForkJoin f4 = new ForkJoin(matrizFuente, filaMedio + 1, filaFin, colMedio, colFin, matrizDestino);
+		filaMedio = (filaFin + filaInicio) / 2;
+		colMedio = (colFin + colInicio) / 2;
+		ForkJoin f1 = new ForkJoin(matrizFuente, filaInicio, filaMedio+1, colInicio, colMedio+1, matrizDestino);
+		ForkJoin f2 = new ForkJoin(matrizFuente, filaInicio, filaMedio+1, colMedio-1, colFin, matrizDestino);
+		ForkJoin f3 = new ForkJoin(matrizFuente, filaMedio-1, filaFin, colInicio, colMedio+1, matrizDestino);
+		ForkJoin f4 = new ForkJoin(matrizFuente, filaMedio-1, filaFin, colMedio-1, colFin, matrizDestino);
 		f1.fork();
 		f2.fork();
 		f3.fork();

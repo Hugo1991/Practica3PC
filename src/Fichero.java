@@ -39,7 +39,11 @@ public class Fichero {
 
 	public static void escribirFichero(String ficheroSalida, Imagen imagenSalida) {
 		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(ficheroSalida));
+			BufferedWriter bw = null;
+			if (!ficheroSalida.contentEquals(".pgm"))
+				bw = new BufferedWriter(new FileWriter(ficheroSalida + ".pgm"));
+			else
+				bw = new BufferedWriter(new FileWriter(ficheroSalida));
 			bw.write(imagenSalida.getTipo());
 			bw.newLine();
 			bw.write("#Imagen creada por Hugo Fernandez Visier");
