@@ -35,9 +35,9 @@ public class Filtro{
 			}
 			posFiltroX++;
 		}
-		
+		suma=Math.abs(suma);
 		if(suma > 255){
-			suma /= Math.abs(getValorAbsoluto());
+			suma /= getValorAbsoluto();
 		}
 		imagenDestino[x][y]=suma;
 	}
@@ -54,6 +54,7 @@ public class Filtro{
 				}
 			}
 		}
-		return Math.max(sumaPos,Math.round(sumaNeg));
+		sumaNeg=Math.abs(sumaNeg);
+		return Math.max(sumaPos,sumaNeg);
 	}
 }
