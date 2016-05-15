@@ -60,4 +60,13 @@ public class Fichero {
 			e.printStackTrace();
 		}
 	}
+
+	public static boolean existeFichero(String nombreFichero) {
+		if (new File(nombreFichero).exists() && !(new File(nombreFichero).isDirectory())) {
+			return true;
+		} else {
+			System.out.println("el fichero no existe");
+			return false;
+		}
+	}
 }
