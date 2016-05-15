@@ -33,6 +33,7 @@ public class ForkJoin extends RecursiveAction {
 			resolverDirectamente();
 			return;
 		}
+		
 		int filaMedio = filaInicio;
 		int colMedio = colInicio;
 		filaMedio = (filaFin + filaInicio) / 2;
