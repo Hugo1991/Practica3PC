@@ -3,7 +3,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 
-public class main {
+/**
+ * 
+ * @author Hugo
+ *
+ *         Creamos un ExecutorService creando un ThreadPool con el numero maximo
+ *         de procesadores disponibles, luego recorremos la matriz a la largo y
+ *         ancho y ejecutamos la clase Executor pasandole los parametros matriz
+ *         origen, fila, columna y la matriz auxiliar
+ * 
+ *         seguidamente nos ejecutará el algoritmo fork/join en el que creamos
+ *         un ForkJoinPool y luego ejecutamos el objeto pasandole la clase
+ *         Fork/join los parametros matriz origen, inicio fila, fin de fila,
+ *         inicio columna, fin columna y matriz auxiliar
+ * 
+ */
+public class Principal {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		Imagen imagenOriginal = new Imagen();
@@ -38,7 +53,8 @@ public class main {
 		// FORK/JOIN
 		startTime = System.currentTimeMillis();
 		ForkJoinPool pool = new ForkJoinPool();
-		pool.invoke(new ForkJoin(imagenOriginal, 1, 1, imagenOriginal.getAncho() - 1, matrizCopia));
+		pool.invoke(new ForkJoin(imagenOriginal.getMatrizImagen(), 1, imagenOriginal.getAlto() - 1, 1,
+				imagenOriginal.getAncho() - 1, matrizCopia));
 		endTime = System.currentTimeMillis();
 		imagenEditada = new Imagen(imagenOriginal.getTipo(), imagenOriginal.getAncho(), imagenOriginal.getAlto(),
 				imagenOriginal.getValorMax());
@@ -50,6 +66,9 @@ public class main {
 				+ " milisegundos con el algoritmo FORK / JOIN.");
 	}
 
+	/**
+	 * Muestra el menu y dependiendo de la opcion crea un filtro
+	 */
 	@SuppressWarnings("resource")
 	public static void menu() {
 		int opcion;

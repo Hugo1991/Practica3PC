@@ -4,20 +4,25 @@ public class Imagen {
 	private int valorMax;
 	private int[][] matrizImagen;
 
-	public Imagen(){
+	/**
+	 * Constructor vacio, inicializamos los valores
+	 */
+	public Imagen() {
 		setTipo(null);
 		setAncho(0);
 		setAlto(0);
 		this.matrizImagen = new int[alto][ancho];
 
 	}
-	public Imagen(String tipo,int ancho,int alto,int valorMax){
+
+	public Imagen(String tipo, int ancho, int alto, int valorMax) {
+		super();
 		setTipo(tipo);
 		setAncho(ancho);
 		setAlto(alto);
 		setValorMax(valorMax);
-		this.matrizImagen = new int[alto][ancho];
 	}
+
 	public int getValorMax() {
 		return valorMax;
 	}
@@ -86,6 +91,9 @@ public class Imagen {
 		this.matrizImagen = matrizImagen;
 	}
 
+	/**
+	 * Metodo para mostrar la matriz
+	 */
 	public void mostrarMatriz() {
 		for (int i = 0; i < getAlto(); i++) {
 			for (int j = 0; j < getAncho(); j++) {
