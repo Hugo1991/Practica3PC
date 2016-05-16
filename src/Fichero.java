@@ -32,12 +32,11 @@ public class Fichero {
 			}
 			imagenSalida.setMatrizImagen(image);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public static void escribirFichero(String ficheroSalida, Imagen imagenSalida) {
+	public static void escribirFichero(String ficheroSalida, Imagen imagenSalida,long milis) {
 		try {
 			BufferedWriter bw = null;
 			if (!ficheroSalida.contentEquals(".pgm"))
@@ -46,7 +45,7 @@ public class Fichero {
 				bw = new BufferedWriter(new FileWriter(ficheroSalida));
 			bw.write(imagenSalida.getTipo());
 			bw.newLine();
-			bw.write("#Imagen creada por Hugo Fernandez Visier");
+			bw.write("#Imagen creada por Hugo Fernandez Visier, ha tardado " +milis+" milisegundos");
 			bw.newLine();
 			bw.write(imagenSalida.getAncho() + " " + imagenSalida.getAlto());
 			bw.newLine();
