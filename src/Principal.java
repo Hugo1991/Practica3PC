@@ -6,19 +6,20 @@ import java.util.concurrent.ForkJoinPool;
 /**
  * 
  * @author Hugo
- *
- *         Creamos un ExecutorService creando un ThreadPool con el numero maximo
- *         de procesadores disponibles, luego recorremos la matriz a la largo y
- *         ancho y ejecutamos la clase Executor pasandole los parametros matriz
- *         origen, fila, columna y la matriz auxiliar
- * 
- *         seguidamente nos ejecutará el algoritmo fork/join en el que creamos
- *         un ForkJoinPool y luego ejecutamos el objeto pasandole la clase
- *         Fork/join los parametros matriz origen, inicio fila, fin de fila,
- *         inicio columna, fin columna y matriz auxiliar
- * 
  */
 public class Principal {
+	/**
+	 * 
+	 * Creamos un ExecutorService creando un ThreadPool con el numero maximo de
+	 * procesadores disponibles, luego recorremos la matriz a la largo y ancho y
+	 * ejecutamos la clase Executor pasandole los parametros matriz origen,
+	 * fila, columna y la matriz auxiliar
+	 * 
+	 * seguidamente nos ejecutará el algoritmo fork/join en el que creamos un
+	 * ForkJoinPool y luego ejecutamos el objeto pasandole la clase Fork/join
+	 * los parametros matriz origen, inicio fila, fin de fila, inicio columna,
+	 * fin columna y matriz auxiliar
+	 */
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		Imagen imagenOriginal = new Imagen();

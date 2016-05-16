@@ -60,7 +60,9 @@ public class Fichero {
 	public static void escribirFichero(String ficheroSalida, Imagen imagenSalida, long milis) {
 		try {
 			BufferedWriter bw = null;
-			if (!ficheroSalida.substring(ficheroSalida.length() - 3, ficheroSalida.length()).equals("pgm"))
+			if (ficheroSalida.length() < 4)
+				bw = new BufferedWriter(new FileWriter(ficheroSalida + ".pgm"));
+			else if (!ficheroSalida.substring(ficheroSalida.length() - 3, ficheroSalida.length()).equals("pgm"))
 				bw = new BufferedWriter(new FileWriter(ficheroSalida + ".pgm"));
 			else
 				bw = new BufferedWriter(new FileWriter(ficheroSalida));

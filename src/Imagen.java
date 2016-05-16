@@ -1,3 +1,8 @@
+/**
+ * 
+ * @author Hugo
+ *
+ */
 public class Imagen {
 	private String tipo;
 	private int ancho, alto;
