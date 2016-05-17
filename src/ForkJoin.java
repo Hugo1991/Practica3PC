@@ -55,20 +55,21 @@ public class ForkJoin extends RecursiveAction {
 	protected void compute() {
 		if ((colFin - colInicio < 4)) {
 			resolverDirectamente();
-			return;
+
+		} else {
+			int filaMedio = (filaFin + filaInicio) / 2;
+			int colMedio = (colFin + colInicio) / 2;
+			ForkJoin f1 = new ForkJoin(matrizFuente, filaInicio, filaMedio, colInicio, colMedio, matrizDestino);
+			ForkJoin f2 = new ForkJoin(matrizFuente, filaInicio, filaMedio, colMedio, colFin, matrizDestino);
+			ForkJoin f3 = new ForkJoin(matrizFuente, filaMedio, filaFin, colInicio, colMedio, matrizDestino);
+			ForkJoin f4 = new ForkJoin(matrizFuente, filaMedio, filaFin, colMedio, colFin, matrizDestino);
+			f1.fork();
+			f2.fork();
+			f3.fork();
+			f4.compute();
+			f1.join();
+			f2.join();
+			f3.join();
 		}
-		int filaMedio = (filaFin + filaInicio) / 2;
-		int colMedio = (colFin + colInicio) / 2;
-		ForkJoin f1 = new ForkJoin(matrizFuente, filaInicio, filaMedio, colInicio, colMedio, matrizDestino);
-		ForkJoin f2 = new ForkJoin(matrizFuente, filaInicio, filaMedio, colMedio, colFin, matrizDestino);
-		ForkJoin f3 = new ForkJoin(matrizFuente, filaMedio, filaFin, colInicio, colMedio, matrizDestino);
-		ForkJoin f4 = new ForkJoin(matrizFuente, filaMedio, filaFin, colMedio, colFin, matrizDestino);
-		f1.fork();
-		f2.fork();
-		f3.fork();
-		f4.compute();
-		f1.join();
-		f2.join();
-		f3.join();
 	}
 }

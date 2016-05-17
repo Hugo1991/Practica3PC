@@ -35,8 +35,7 @@ public class Principal {
 		ExecutorService ejecutor = Executors.newFixedThreadPool((Runtime.getRuntime().availableProcessors()));
 		long startTime = System.currentTimeMillis();
 		for (int i = 1; i < imagenOriginal.getAlto() - 1; i++)
-			for (int j = 1; j < imagenOriginal.getAncho() - 1; j++)
-				ejecutor.execute(new Executor(imagenOriginal.getMatrizImagen(), i, j, matrizCopia));
+			ejecutor.execute(new Executor(imagenOriginal.getMatrizImagen(), i, matrizCopia));
 
 		long endTime = System.currentTimeMillis();
 		ejecutor.shutdown();
